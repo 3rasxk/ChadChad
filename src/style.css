@@ -1,0 +1,455 @@
+/* ================================================================
+   Chad-Chad (ชัดชัด) — Tailwind CSS + Custom Design Tokens
+   ================================================================ */
+
+/* ────────── Google Fonts (must precede all other rules) ────────── */
+@import url('https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600;700&family=Nunito:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+/* ────────── Tailwind Theme Extension ────────── */
+@theme {
+  --font-mitr: 'Mitr', sans-serif;
+  --font-nunito: 'Nunito', sans-serif;
+  --font-inter: 'Inter', sans-serif;
+
+  --color-brand-50: #eef2ff;
+  --color-brand-100: #e0e7ff;
+  --color-brand-500: #6366f1;
+  --color-brand-600: #4f46e5;
+  --color-brand-700: #4338ca;
+
+  --color-pastel-cyan: #a7f3d0;
+  --color-pastel-pink: #fbcfe8;
+  --color-pastel-yellow: #fde68a;
+  --color-pastel-cyan-bar: #67e8f9;
+  --color-pastel-pink-bar: #f9a8d4;
+  --color-pastel-yellow-bar: #fcd34d;
+
+  --color-student-bg: #F8FAFC;
+  --color-student-card: #FFFFFF;
+  --color-student-text: #334155;
+  --color-student-blue: #3b82f6;
+  --color-student-blue-hover: #2563eb;
+
+  --color-admin-sidebar: #1e1b4b;
+  --color-admin-bg: #f8fafc;
+  --color-admin-card: #ffffff;
+
+  /* Animation easings */
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ────────── Base Styles ────────── */
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-mitr);
+  }
+
+  button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+
+  input {
+    font-family: inherit;
+  }
+}
+
+/* ================================================================
+   STUDENT APP — Custom Styles
+   ================================================================ */
+
+/* ── Screen transitions ── */
+.screen {
+  animation: fadeInUp 0.5s ease-out both;
+}
+
+.screen.hidden {
+  display: none !important;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.5s ease-out both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* ── Star shimmer ── */
+@keyframes starShimmer {
+
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+
+  50% {
+    filter: brightness(1.3);
+  }
+}
+
+.star-shimmer {
+  animation: starShimmer 2s ease-in-out infinite;
+}
+
+/* ── Mic listening pulse (Google Voice Search style) ── */
+@keyframes micPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.45);
+  }
+
+  70% {
+    box-shadow: 0 0 0 22px rgba(239, 68, 68, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 22px rgba(239, 68, 68, 0);
+  }
+}
+
+@keyframes micBreathe {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.06);
+  }
+}
+
+.mic-recording {
+  animation: micPulse 1.4s ease-out infinite, micBreathe 2s ease-in-out infinite;
+  background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+}
+
+/* ── Mic processing state (waiting for Speech API result after onspeechend) ── */
+@keyframes micProcessGlow {
+
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 0.85;
+  }
+}
+
+.mic-processing {
+  animation: micProcessGlow 1.2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ── Mic invite pulse (gentle blue — "try again!" prompt after guidance) ── */
+@keyframes micInvite {
+  0% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+  }
+
+  70% {
+    box-shadow: 0 0 0 18px rgba(59, 130, 246, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 18px rgba(59, 130, 246, 0);
+  }
+}
+
+@keyframes micInviteBreathe {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.04);
+  }
+}
+
+.mic-invite {
+  animation: micInvite 2s ease-out infinite, micInviteBreathe 2.5s ease-in-out infinite;
+}
+
+/* ── Guidance Card (Cases 1-2: warm retry prompt) ── */
+.guidance-card {
+  animation: guidanceEnter 0.5s var(--ease-bounce) both;
+}
+
+@keyframes guidanceEnter {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes guidanceIconBounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.guidance-icon-bounce {
+  animation: guidanceIconBounce 2s ease-in-out infinite;
+}
+
+/* ── Recording dot blink ── */
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.blink {
+  animation: blink 0.9s ease-in-out infinite;
+}
+
+/* ── Speaker icon pulse ── */
+@keyframes speakerPulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.12);
+  }
+}
+
+.speaker-playing {
+  animation: speakerPulse 0.6s ease-in-out infinite;
+}
+
+/* ── Star pop for feedback ── */
+@keyframes starPop {
+  from {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.star-pop {
+  animation: starPop 0.5s var(--ease-bounce) both;
+}
+
+/* ── Gauge fill transition ── */
+.gauge-fill-transition {
+  transition: width 0.85s var(--ease-bounce);
+}
+
+/* ── Subtle float for stage cards ── */
+@keyframes subtleFloat {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+/* ── Model download progress bar (smooth fill) ── */
+.model-progress-bar {
+  transition: width 0.4s ease-out;
+}
+
+/* ── Loading icon bounce ── */
+@keyframes icon-bounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.loading-icon-bounce {
+  animation: icon-bounce 1.2s ease-in-out infinite;
+}
+
+/* ── Stage card responsive text (prevent overflow on long Thai words) ── */
+.stage-card {
+  transition: all 0.25s ease;
+  overflow: hidden;
+  min-height: 100px;
+}
+
+.stage-card:not(.locked):hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+}
+
+.stage-card.locked {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* All stage card words: same size, responsive to viewport */
+.stage-word {
+  font-size: clamp(1.3rem, 4vw, 1.5rem);
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+/* ── Gameplay view: responsive word title ── */
+.gameplay-word {
+  font-size: clamp(2rem, 12vw, 4.5rem);
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+/* ================================================================
+   ADMIN PORTAL — Custom Styles
+   ================================================================ */
+
+/* ── Sidebar nav link styling ── */
+.nav-link {
+  transition: all 0.15s ease;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.nav-link.active {
+  background: rgba(255, 255, 255, 0.12);
+  border-left: 3px solid #818cf8;
+}
+
+/* ── Drag-and-drop zone ── */
+.drop-zone {
+  border: 2px dashed #cbd5e1;
+  transition: all 0.2s ease;
+}
+
+.drop-zone:hover,
+.drop-zone.drag-over {
+  border-color: #6366f1;
+  background: #eef2ff;
+}
+
+/* ── Table row hover ── */
+.table-row {
+  transition: background-color 0.15s ease;
+}
+
+.table-row:hover {
+  background-color: #f8fafc;
+}
+
+/* ── Status badge ── */
+.badge-ready {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.badge-missing {
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+/* ── Smooth view transitions for admin ── */
+.admin-view {
+  animation: fadeIn 0.35s ease-out both;
+}
+
+.admin-view.hidden {
+  display: none !important;
+}
+
+/* ── Image container sizing ── */
+.word-image-container {
+  width: 240px;
+  /* Increased width */
+  height: 160px;
+  /* Adjusted height for a nice 3:2 aspect ratio */
+  margin: 0 auto 16px auto;
+  /* Center it and add space below */
+  display: block;
+  /* Remove flex if it's causing squishing */
+  overflow: hidden;
+  border-radius: 16px;
+  /* Slightly rounder corners for a modern look */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  /* Optional: Soft shadow to make it pop */
+}
+
+.word-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* This is the magic property to remove white gaps */
+  object-position: center;
+  /* Keep the focal point in the middle */
+  display: block;
+}

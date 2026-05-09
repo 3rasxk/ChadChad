@@ -1,0 +1,19 @@
+{
+  "name": "chad-chad",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.2.2",
+    "tailwindcss": "^4.2.2",
+    "vite": "^8.0.4"
+  },
+  "dependencies": {
+    "firebase": "^12.13.0"
+  }
+}
