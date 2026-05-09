@@ -5,6 +5,7 @@ import { resolve } from 'path'
 export default defineConfig({
   root: 'src',
   publicDir: '../public',
+  base: '/ChadChad/',
   plugins: [tailwindcss()],
   build: {
     outDir: '../dist',
