@@ -803,6 +803,7 @@ function bootstrapApplication() {
   if (btnLogout) {
     btnLogout.addEventListener('click', async () => {
       try {
+        localStorage.removeItem('chadchad_stars');
         await signOut(auth);
         console.log('✅ Logged out');
       } catch (err) {
