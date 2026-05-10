@@ -1,7 +1,6 @@
 /**
  * Shared vocabulary stage definitions for Chad-Chad
  *
- * 6 Target Words: ช้าง, พริก, งู, โรงเรียน, แมลง, ความรู้
  *
  * Each stage represents a Thai word the student must practice.
  * `stars` tracks best performance (0 = not attempted, 1-3 = earned).
@@ -13,8 +12,8 @@ export const stages = [
     id: 'chang',
     word: 'ช้าง',
     romanized: 'Chang — Elephant',
-    image: 'public/img/chang/chang.jpg',
-    audioListen: 'public/audio/chang/chang.mp3',
+    image: '/img/chang/chang.jpg',
+    audioListen: '/audio/chang/chang.mp3',
     stars: 3,
     unlocked: true,
   },
@@ -22,8 +21,8 @@ export const stages = [
     id: 'prik',
     word: 'พริก',
     romanized: 'Prik — Chili',
-    image: 'public/img/prik/prik.jpg',
-    audioListen: 'public/audio/prik/prik.mp3',
+    image: '/img/prik/prik.jpg',
+    audioListen: '/audio/prik/prik.mp3',
     stars: 0,
     unlocked: true,
   },
@@ -31,8 +30,8 @@ export const stages = [
     id: 'rongrian',
     word: 'โรงเรียน',
     romanized: 'Rongrian — School',
-    image: 'public/img/rongrian/rongrian.jpg',
-    audioListen: 'public/audio/rongrian/rongrian.mp3',
+    image: '/img/rongrian/rongrian.jpg',
+    audioListen: '/audio/rongrian/rongrian.mp3',
     stars: 0,
     unlocked: true,
   },
@@ -40,8 +39,62 @@ export const stages = [
     id: 'khwamru',
     word: 'ความรู้',
     romanized: 'Khwaamruu — Knowledge',
-    image: 'public/img/khwamru/khwamru.jpg',
-    audioListen: 'public/audio/khwamru/khwamru.mp3',
+    image: '/img/khwamru/khwamru.jpg',
+    audioListen: '/audio/khwamru/khwamru.mp3',
+    stars: 0,
+    unlocked: true,
+  },
+  {
+    id: 'prapprung',
+    word: 'ปรับปรุง',
+    romanized: 'Prap-prung — Improve',
+    image: '/img/prapprung/prapprung.jpg',
+    audioListen: '/audio/prapprung/prapprung.mp3',
+    stars: 0,
+    unlocked: true,
+  },
+  {
+    id: 'plianplaeng',
+    word: 'เปลี่ยนแปลง',
+    romanized: 'Plian-plaeng — Change',
+    image: '/img/plianplaeng/plianplaeng.jpg',
+    audioListen: '/audio/plianplaeng/plianplaeng.mp3',
+    stars: 0,
+    unlocked: true,
+  },
+  {
+    id: 'phloetphloen',
+    word: 'เพลิดเพลิน',
+    romanized: 'Phloet-phloen — Enjoy',
+    image: '/img/phloetphloen/phloetphloen.jpg',
+    audioListen: '/audio/phloetphloen/phloetphloen.mp3',
+    stars: 0,
+    unlocked: true,
+  },
+  {
+    id: 'sapphayaakon',
+    word: 'ทรัพยากร',
+    romanized: 'Sap-pha-yaa-kon — Resource',
+    image: '/img/sapphayaakon/sapphayaakon.webp',
+    audioListen: '/audio/sapphayaakon/sapphayaakon.mp3',
+    stars: 0,
+    unlocked: true,
+  },
+  {
+    id: 'thammachaat',
+    word: 'ธรรมชาติ',
+    romanized: 'Tham-ma-chaat — Nature',
+    image: '/img/thammachaat/thammachaat.jpg',
+    audioListen: '/audio/thammachaat/thammachaat.mp3',
+    stars: 0,
+    unlocked: true,
+  },
+  {
+    id: 'suesat',
+    word: 'ซื่อสัตย์',
+    romanized: 'Sue-sat — Honest',
+    image: '/img/suesat/suesat.jpg',
+    audioListen: '/audio/suesat/suesat.mp3',
     stars: 0,
     unlocked: true,
   },
@@ -49,6 +102,6 @@ export const stages = [
 
 /** Admin mock data: stats & word list for the dashboard */
 export const adminStats = {
-  totalWords: 4,
+  totalWords: 10,
   totalStudents: 24,
 };
