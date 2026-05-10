@@ -101,12 +101,12 @@ async function loadStudents() {
       const wordStarsHTML = WORD_LIST.map(w => {
         const wStars = starsPerWord[w] || 0;
         const emptyStars = 3 - wStars;
-        return `<span class="inline-flex items-center gap-0.5 text-xs px-1.5 py-0.5 rounded ${
-          wStars >= 3 ? 'bg-emerald-50 text-emerald-600' :
-          wStars >= 1 ? 'bg-amber-50 text-amber-600' :
-          'bg-slate-50 text-slate-400'
-        }">${w} ${'⭐'.repeat(wStars)}${'<span class="opacity-30 grayscale">⭐</span>'.repeat(emptyStars)}</span>`;
-      }).join(' ');
+        return `<span class="inline-flex items-center justify-between gap-1 text-[10px] px-2 py-0.5 rounded border border-transparent w-[90px] ${
+          wStars >= 3 ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
+          wStars >= 1 ? 'bg-amber-50 text-amber-600 border-amber-100' :
+          'bg-slate-50 text-slate-400 border-slate-100'
+        }"><span class="font-medium truncate">${w}</span><span class="shrink-0">${'⭐'.repeat(wStars)}${'<span class="opacity-20 grayscale">⭐</span>'.repeat(emptyStars)}</span></span>`;
+      }).join('');
 
       return `
       <tr class="table-row border-b border-slate-50 hover:bg-slate-50/50 transition-colors">
@@ -187,16 +187,18 @@ function renderWordAnalytics(students) {
     const diffColor = ws.avgStars >= 2.5 ? 'text-emerald-600 bg-emerald-50' : ws.avgStars >= 1.5 ? 'text-amber-600 bg-amber-50' : ws.avgStars > 0 ? 'text-rose-600 bg-rose-50' : 'text-slate-400 bg-slate-50';
 
     return `
-      <div class="grid py-3 border-b border-slate-50 last:border-0 items-center" style="grid-template-columns: 7rem 1fr 5rem 5rem 5.5rem;">
-        <span class="text-base font-semibold text-slate-700 truncate">${ws.word}</span>
+      <div class="grid py-3 border-b border-slate-50 last:border-0 items-center min-w-[500px]" style="grid-template-columns: 7rem 1fr 5rem 5rem 5.5rem;">
+        <span class="text-sm font-semibold text-slate-700 truncate pr-2">${ws.word}</span>
         <div class="px-2">
           <div class="h-2.5 bg-slate-100 rounded-full overflow-hidden">
             <div class="h-full rounded-full bg-gradient-to-r from-indigo-400 to-indigo-500 transition-all duration-1000" style="width: ${starPct}%"></div>
           </div>
         </div>
-        <span class="text-sm text-slate-500 text-right tabular-nums">${ws.avgStars.toFixed(1)} ⭐</span>
-        <span class="text-xs text-slate-500 text-right tabular-nums">${ws.practiced}/${ws.totalStudents} คน</span>
-        <span class="text-xs px-2 py-0.5 rounded-full font-medium text-center ${diffColor}">${difficulty}</span>
+        <span class="text-sm text-slate-500 text-right tabular-nums pr-4">${ws.avgStars.toFixed(1)} ⭐</span>
+        <span class="text-xs text-slate-500 text-right tabular-nums pr-4">${ws.practiced}/${ws.totalStudents}</span>
+        <div class="flex justify-center">
+          <span class="text-[10px] px-2 py-0.5 rounded-full font-medium text-center whitespace-nowrap min-w-[4.5rem] ${diffColor}">${difficulty}</span>
+        </div>
       </div>
     `;
   }).join('');

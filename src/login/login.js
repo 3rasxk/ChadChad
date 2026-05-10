@@ -88,19 +88,27 @@ document.addEventListener('DOMContentLoaded', () => {
   // ────────────────────────────────────────────────────────────
   btnGoogle.addEventListener('click', async () => {
     hideError();
+    console.log('[Login] 👆 Google login clicked');
     setLoading(true);
     try {
       const result = await signInWithPopup(auth, googleProvider);
+      console.log('✅ Google Login สำเร็จ:', result.user.email);
       await checkAndCreateUser(result.user);
-      window.location.href = '../index.html';
+      
+      // ใช้ BASE_URL เพื่อความแม่นยำในการเปลี่ยนหน้า
+      window.location.href = import.meta.env.BASE_URL;
     } catch (error) {
-      console.error('Google login error:', error);
+      console.error('❌ Google login error:', error);
       setLoading(false);
 
       if (error.code === 'auth/popup-closed-by-user') {
         showError('คุณปิดหน้าต่าง Google ก่อนเข้าสู่ระบบ');
-      } else if (error.code !== 'auth/cancelled-popup-request') {
-        showError('เกิดข้อผิดพลาดในการเข้าสู่ระบบด้วย Google');
+      } else if (error.code === 'auth/cancelled-popup-request') {
+        // เงียบไว้ เพราะผู้ใช้อาจจะกดย้ำๆ
+      } else if (error.code === 'auth/operation-not-allowed') {
+        showError('ยังไม่ได้เปิดใช้งาน Google Login ใน Firebase Console');
+      } else {
+        showError(`เกิดข้อผิดพลาด: ${error.message}`);
       }
     }
   });
@@ -125,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const result = await signInWithEmailAndPassword(auth, email, password);
       console.log('✅ Login สำเร็จ:', result.user.email);
       await checkAndCreateUser(result.user);
-      window.location.href = '../index.html';
+      window.location.href = import.meta.env.BASE_URL;
     } catch (error) {
       console.error('Email login error:', error);
       setLoading(false);

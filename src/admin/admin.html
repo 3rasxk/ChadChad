@@ -26,18 +26,20 @@
        DASHBOARD
        ═══════════════════════════════════════════════ -->
   <div id="view-dashboard" class="admin-view hidden">
-    <div class="flex min-h-screen">
+    <div class="flex flex-col md:flex-row min-h-screen">
 
       <!-- ── Sidebar ── -->
-      <aside class="w-64 bg-admin-sidebar text-white flex flex-col shrink-0">
-        <div class="px-6 py-6 border-b border-white/10">
-          <h1 class="text-xl font-bold font-mitr tracking-wide text-blue-400">Chad Chad</h1>
-          <p class="text-indigo-300 text-xs font-light mt-0.5">Admin Portal</p>
+      <aside class="w-full md:w-64 bg-admin-sidebar text-white flex flex-col shrink-0">
+        <div class="px-6 py-4 md:py-6 border-b border-white/10 flex md:block items-center justify-between">
+          <div>
+            <h1 class="text-xl font-bold font-mitr tracking-wide text-blue-400">Chad Chad</h1>
+            <p class="text-indigo-300 text-xs font-light mt-0.5">Admin Portal</p>
+          </div>
         </div>
 
-        <nav class="flex-1 px-3 py-4 space-y-1 flex flex-col">
+        <nav class="flex-1 px-3 py-3 md:py-4 space-y-1 flex flex-row md:flex-col overflow-x-auto md:overflow-x-visible">
           <a href="#"
-            class="nav-link active flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-white/90">
+            class="nav-link active flex items-center gap-3 px-4 py-2 md:py-3 rounded-lg text-sm font-medium text-white/90 whitespace-nowrap">
             <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" stroke-width="1.8"
               viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round"
@@ -47,7 +49,7 @@
           </a>
 
           <a href="../index.html"
-            class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-white/60 hover:text-white/90">
+            class="nav-link flex items-center gap-3 px-4 py-2 md:py-3 rounded-lg text-sm font-medium text-white/60 hover:text-white/90 whitespace-nowrap">
             <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" stroke-width="1.8"
               viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round"
@@ -56,10 +58,10 @@
             ไปหน้าฝึกพูด
           </a>
 
-          <div class="flex-1"></div>
+          <div class="hidden md:block flex-1"></div>
 
           <a href="#" id="btn-reset-stars"
-            class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-white/60 hover:text-amber-400">
+            class="nav-link flex items-center gap-3 px-4 py-2 md:py-3 rounded-lg text-sm font-medium text-white/60 hover:text-amber-400 whitespace-nowrap">
             <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" stroke-width="1.8"
               viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round"
@@ -69,7 +71,7 @@
           </a>
 
           <a href="#" id="btn-logout"
-            class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-white/60 hover:text-red-400">
+            class="nav-link flex items-center gap-3 px-4 py-2 md:py-3 rounded-lg text-sm font-medium text-white/60 hover:text-red-400 whitespace-nowrap">
             <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" stroke-width="1.8"
               viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round"
@@ -81,7 +83,7 @@
       </aside>
 
       <!-- ── Main Content ── -->
-      <main class="flex-1 p-8 overflow-y-auto">
+      <main class="flex-1 p-4 md:p-8 overflow-y-auto">
         <!-- Page Title -->
         <div class="mb-8">
           <h2 class="text-2xl font-bold text-slate-800 font-mitr">Dashboard</h2>
@@ -240,18 +242,16 @@
             </div>
           </div>
 
-          <div class="overflow-hidden">
+          <div class="overflow-x-auto pb-2">
             <!-- Header -->
-            <div
-              class="grid py-2 border-b border-slate-100 text-xs text-slate-400 uppercase tracking-wider items-center"
-              style="grid-template-columns: 7rem 1fr 5rem 5rem 5.5rem;">
+            <div class="grid py-2 border-b border-slate-100 text-[10px] md:text-xs text-slate-400 uppercase tracking-wider items-center min-w-[500px]" style="grid-template-columns: 7rem 1fr 5rem 5rem 5.5rem;">
               <span class="font-medium">คำศัพท์</span>
               <span class="font-medium px-2">ดาวเฉลี่ย</span>
-              <span class="font-medium text-right">เฉลี่ย</span>
-              <span class="font-medium text-right">ฝึกแล้ว</span>
+              <span class="font-medium text-right pr-4">เฉลี่ย</span>
+              <span class="font-medium text-right pr-4">ฝึกแล้ว</span>
               <span class="font-medium text-center">ระดับ</span>
             </div>
-            <div id="word-analytics">
+            <div id="word-analytics" class="min-w-[500px]">
               <!-- Dynamically populated by admin.js -->
               <div class="py-8 text-center text-slate-300 text-sm">กำลังโหลดข้อมูล...</div>
             </div>
