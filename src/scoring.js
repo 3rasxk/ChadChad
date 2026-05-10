@@ -314,13 +314,19 @@ export function calculateScores(transcript, targetWord) {
   }
 
   const entry = TARGET_DICT[targetWord];
-  if (!entry) {
-    const isMatch = transcript === targetWord;
-    const s = isMatch ? 100 : 0;
+
+  // ── Step 0: Perfect Match Short-Circuit ──
+  // If the user's transcript exactly matches the target word (or was auto-corrected to it),
+  // they spoke it perfectly. Give them 100% to avoid parsing bugs in complex words.
+  if (transcript === targetWord) {
     return {
-      consonantScore: s, vowelScore: s, finalScore: s, toneScore: s,
-      overallScore: s, stars: s === 100 ? 3 : 0, feedbackList: [],
+      consonantScore: 100, vowelScore: 100, finalScore: 100, toneScore: 100,
+      overallScore: 100, stars: 3, feedbackList: [],
     };
+  }
+
+  if (!entry) {
+    return ZERO;
   }
 
   // ── Step 1: Get user syllables from dynamic parser ──
