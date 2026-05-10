@@ -175,7 +175,7 @@ async function syncStarsToFirestore(starMap) {
 
   try {
     const totalStars = Object.values(starMap).reduce((sum, s) => sum + s, 0);
-    const ref = doc(db, 'students', user.uid);
+    const ref = doc(db, 'students', user.email);
     await updateDoc(ref, {
       stars_per_word: starMap,
       total_score: totalStars,
@@ -193,7 +193,7 @@ async function loadStarsFromFirestore() {
   if (!user) return;
 
   try {
-    const ref = doc(db, 'students', user.uid);
+    const ref = doc(db, 'students', user.email);
     const snap = await getDoc(ref);
     if (snap.exists() && snap.data().stars_per_word) {
       currentStudentStars = snap.data().stars_per_word;

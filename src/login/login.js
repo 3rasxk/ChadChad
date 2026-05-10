@@ -19,7 +19,7 @@ import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 
 async function checkAndCreateUser(user) {
   try {
-    const userRef = doc(db, 'students', user.uid);
+    const userRef = doc(db, 'students', user.email);
     const userSnap = await getDoc(userRef);
 
     if (!userSnap.exists()) {
@@ -30,9 +30,9 @@ async function checkAndCreateUser(user) {
         total_score: 0,
         createdAt: serverTimestamp(),
       });
-      console.log('✅ สร้าง student document ใหม่:', user.uid);
+      console.log('✅ สร้าง student document ใหม่:', user.email);
     } else {
-      console.log('📄 student document มีอยู่แล้ว:', user.uid);
+      console.log('📄 student document มีอยู่แล้ว:', user.email);
     }
   } catch (err) {
     console.warn('⚠️ Firestore error (ตรวจสอบ Rules):', err.message);

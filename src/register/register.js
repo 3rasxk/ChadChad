@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // สร้าง document นักเรียนใน Firestore (ไม่ block การสมัครถ้า rules บล็อก)
       try {
-        const userRef = doc(db, 'students', result.user.uid);
+        const userRef = doc(db, 'students', result.user.email);
         await setDoc(userRef, {
           uid: result.user.uid,
           email: result.user.email,
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
           total_score: 0,
           createdAt: serverTimestamp(),
         });
-        console.log('✅ สร้าง student document สำเร็จ:', result.user.uid);
+        console.log('✅ สร้าง student document สำเร็จ:', result.user.email);
       } catch (fsErr) {
         console.warn('⚠️ Firestore write skipped (ตรวจสอบ Rules):', fsErr.message);
       }
