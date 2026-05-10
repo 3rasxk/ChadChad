@@ -124,6 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
       console.log('✅ Login สำเร็จ:', result.user.email);
+      await checkAndCreateUser(result.user);
       window.location.href = '../index.html';
     } catch (error) {
       console.error('Email login error:', error);
