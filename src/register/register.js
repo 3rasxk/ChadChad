@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
           total_score: 0,
           createdAt: serverTimestamp(),
         });
-        console.log('✅ สร้าง student document สำเร็จ:', result.user.email);
+        console.log('✅ สร้าง student document สำเร็จ:', result.user.uid);
       } catch (fsErr) {
         console.warn('⚠️ Firestore write skipped (ตรวจสอบ Rules):', fsErr.message);
       }

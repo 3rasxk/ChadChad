@@ -30,9 +30,9 @@ async function checkAndCreateUser(user) {
         total_score: 0,
         createdAt: serverTimestamp(),
       });
-      console.log('✅ สร้าง student document ใหม่:', user.email);
+      console.log('✅ สร้าง student document ใหม่:', user.uid);
     } else {
-      console.log('📄 student document มีอยู่แล้ว:', user.email);
+      console.log('📄 student document มีอยู่แล้ว:', user.uid);
     }
   } catch (err) {
     console.warn('⚠️ Firestore error (ตรวจสอบ Rules):', err.message);
