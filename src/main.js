@@ -200,7 +200,7 @@ async function loadStarsFromFirestore() {
       console.log('[ChadChad] ☁️ Loaded stars from Firestore');
     } else {
       // First time login or no stars yet
-      currentStudentStars = loadStars(); 
+      currentStudentStars = loadStars();
     }
   } catch (err) {
     console.warn('[ChadChad] ⚠️ Could not load stars from Firestore:', err.message);
@@ -348,7 +348,7 @@ async function sendToGroqWhisper(audioBlob, targetWord) {
 
     "เพลิดเพลิน": "พิมพ์ตามเสียงสัทศาสตร์เป๊ะๆ ห้ามแก้คำผิด คำที่เป็นไปได้: เพลิดเพลิน, เพิดเพิน, เปลิดเปลิน",
     "ทรัพยากร": "พิมพ์ตามเสียงสัทศาสตร์เป๊ะๆ ห้ามแก้คำผิด คำที่เป็นไปได้: ทรัพยากร, ซับพะยากอน, สับพะยากอน",
-    "ธรรมชาติ": "พิมพ์ตามเสียงสัทศาสตร์เป๊ะๆ ห้ามแก้คำผิด คำที่เป็นไปได้: ธรรมชาติ, ทำมะชาด, ตำมะชาด",
+    "ธรรมชาติ": "พิมพ์ตามเสียงสัทศาสตร์เป๊ะๆ ห้ามแก้คำผิด คำที่เป็นไปได้: ธรรมชาติ, ทำมะชาด, ตำมะชาด, ธรรมซาด, ทำมะซาด",
     "ซื่อสัตย์": "พิมพ์ตามเสียงสัทศาสตร์เป๊ะๆ ห้ามแก้คำผิด คำที่เป็นไปได้: ซื่อสัตย์, สื่อสัด, ชื่อสัด",
   };
 
@@ -787,6 +787,8 @@ function bootstrapApplication() {
   // Load stars from Firestore only AFTER Firebase Auth initializes
   onAuthStateChanged(auth, async (user) => {
     if (user) {
+      const emailDisplay = document.getElementById('user-email-display');
+      if (emailDisplay) emailDisplay.textContent = user.email;
       await loadStarsFromFirestore();
       renderStageGrid();
     } else {
