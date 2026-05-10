@@ -88,8 +88,8 @@ const TARGET_DICT = {
     ]
   },
   "ทรัพยากร": {
-    id: "sapphayakon", romanized: "Sap-pha-yaa-kon — Resource",
-    image: "img/sapphayakon/sapphayakon.jpg", audio: "audio/sapphayakon/sapphayakon.mp3",
+    id: "sapphayaakon", romanized: "Sap-pha-yaa-kon — Resource",
+    image: "img/sapphayaakon/sapphayaakon.webp", audio: "audio/sapphayaakon/sapphayaakon.mp3",
     stars: 0, unlocked: true, aliases: ["ซับพะยากอน"],
     syllables: [
       { text: "ทรัพ", expectedInitials: ["ซ"], expectedVowel: "อั", expectedFinal: ["บ", "ป", "พ"], phoneticGroup: ["ซับ", "ทับ", "สับ"] },
@@ -755,7 +755,10 @@ function enterGameplay(word) {
     if (ui.wordThai) ui.wordThai.textContent = word;
     if (ui.wordRomanized) ui.wordRomanized.textContent = entry.romanized;
     // Dynamically set audio from TARGET_DICT
-    if (ui.refAudioListen) ui.refAudioListen.src = entry.audio ? import.meta.env.BASE_URL + entry.audio : '';
+    if (ui.refAudioListen) {
+      ui.refAudioListen.src = entry.audio ? import.meta.env.BASE_URL + entry.audio : '';
+      ui.refAudioListen.load(); // Force browser to load the new source
+    }
 
     showView('view-gameplay');
     hideResults();
