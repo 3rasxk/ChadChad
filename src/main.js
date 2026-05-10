@@ -777,9 +777,15 @@ function bootstrapApplication() {
   // Boot directly into stages — no welcome screen
   state.appReady = true;
 
-  // Load stars from Firestore (if logged in) then render
-  loadStarsFromFirestore().then(() => {
-    renderStageGrid();
+  // Load stars from Firestore only AFTER Firebase Auth initializes
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      await loadStarsFromFirestore();
+      renderStageGrid();
+    } else {
+      // Not logged in -> redirect to login
+      window.location.href = import.meta.env.BASE_URL + 'login/login.html';
+    }
   });
 
   if (ui.btnBack) {
