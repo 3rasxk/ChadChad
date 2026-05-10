@@ -213,7 +213,6 @@ function setupLogout() {
   btn.addEventListener('click', async (e) => {
     e.preventDefault();
     try {
-      localStorage.removeItem('chadchad_stars');
       await signOut(auth);
       console.log('[Admin] ✅ Logged out');
     } catch (err) {

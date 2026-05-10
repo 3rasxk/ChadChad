@@ -138,14 +138,12 @@ const state = {
    LOCALSTORAGE + FIRESTORE STAR PERSISTENCE
    ════════════════════════════════════════════════════════════════ */
 
-const STORAGE_KEY = 'chadchad_stars';
+// ไม่ใช้ localStorage แล้ว ใช้ตัวแปรในหน่วยความจำแทน และพึ่งพา Firestore เป็นหลัก
+let currentStudentStars = null;
 
 function loadStars() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
-  } catch (_) { }
-  // Default: all words start at 0 stars
+  if (currentStudentStars) return currentStudentStars;
+
   const defaults = {};
   for (const word of Object.keys(TARGET_DICT)) {
     defaults[word] = 0;
@@ -154,9 +152,7 @@ function loadStars() {
 }
 
 function saveStars(starMap) {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(starMap));
-  } catch (_) { }
+  currentStudentStars = starMap;
 }
 
 /** Save star for a specific word if new score is higher */
@@ -191,7 +187,7 @@ async function syncStarsToFirestore(starMap) {
   }
 }
 
-/** Load stars from Firestore on login and merge with localStorage */
+/** Load stars from Firestore on login */
 async function loadStarsFromFirestore() {
   const user = auth.currentUser;
   if (!user) return;
@@ -200,15 +196,11 @@ async function loadStarsFromFirestore() {
     const ref = doc(db, 'students', user.uid);
     const snap = await getDoc(ref);
     if (snap.exists() && snap.data().stars_per_word) {
-      const cloudStars = snap.data().stars_per_word;
-      const localStars = loadStars();
-
-      // Merge: keep the highest score per word
-      for (const word of Object.keys(TARGET_DICT)) {
-        localStars[word] = Math.max(localStars[word] || 0, cloudStars[word] || 0);
-      }
-      saveStars(localStars);
-      console.log('[ChadChad] ☁️ Merged stars from Firestore');
+      currentStudentStars = snap.data().stars_per_word;
+      console.log('[ChadChad] ☁️ Loaded stars from Firestore');
+    } else {
+      // First time login or no stars yet
+      currentStudentStars = loadStars(); 
     }
   } catch (err) {
     console.warn('[ChadChad] ⚠️ Could not load stars from Firestore:', err.message);
@@ -803,7 +795,6 @@ function bootstrapApplication() {
   if (btnLogout) {
     btnLogout.addEventListener('click', async () => {
       try {
-        localStorage.removeItem('chadchad_stars');
         await signOut(auth);
         console.log('✅ Logged out');
       } catch (err) {
