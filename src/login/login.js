@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       await checkAndCreateUser(result.user);
-      window.location.href = '/index.html';
+      window.location.href = '../index.html';
     } catch (error) {
       console.error('Google login error:', error);
       setLoading(false);
@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
       console.log('✅ Login สำเร็จ:', result.user.email);
-      window.location.href = '/index.html';
+      window.location.href = '../index.html';
     } catch (error) {
       console.error('Email login error:', error);
       setLoading(false);
@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 3. ไปหน้าสมัครสมาชิก
   // ────────────────────────────────────────────────────────────
   btnRegister.addEventListener('click', () => {
-    window.location.href = '/register/register.html';
+    window.location.href = '../register/register.html';
   });
 
   // ────────────────────────────────────────────────────────────
@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnAdmin = document.getElementById('btn-admin');
   if (btnAdmin) {
     btnAdmin.addEventListener('click', () => {
-      window.location.href = '/admin/admin.html';
+      window.location.href = '../admin/admin.html';
     });
   }
 });

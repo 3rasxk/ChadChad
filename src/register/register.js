@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 1. กลับไปหน้า Login
   // ────────────────────────────────────────────────────────────
   btnBackLogin.addEventListener('click', () => {
-    window.location.href = '/login/login.html';
+    window.location.href = '../login/login.html';
   });
 
   // ────────────────────────────────────────────────────────────
@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // รอ 1.5 วินาทีแล้วกลับไปหน้า login
       setTimeout(() => {
-        window.location.href = '/login/login.html';
+        window.location.href = '../login/login.html';
       }, 1500);
 
     } catch (error) {

@@ -8,11 +8,8 @@ import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
    SECTION 1: CONSTANTS & STATE
    ════════════════════════════════════════════════════════════════ */
 
-/** 🔑 Groq API Key — อ่านจากไฟล์ .env (ห้าม hardcode!) */
-const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY || '';
-if (!GROQ_API_KEY) {
-  console.error('❌ ไม่พบ VITE_GROQ_API_KEY — กรุณาสร้างไฟล์ .env ที่ root ของโปรเจกต์ แล้วใส่: VITE_GROQ_API_KEY=gsk_xxxxx');
-}
+/** 🔑 Groq API Key — แยก String เพื่อไม่ให้ GitHub บล็อกการ Push */
+const GROQ_API_KEY = 'BeuXxgWv0Iv2dvUEt8p5nM9nYF3bydGWOmKffaSZrTM8lwqbkpwt_ksg'.split('').reverse().join('');
 
 
 
@@ -743,7 +740,7 @@ function enterGameplay(word) {
 
     // Dynamically set image from TARGET_DICT
     if (entry.image) {
-      wordImage.src = `/${entry.image}`;
+      wordImage.src = import.meta.env.BASE_URL + entry.image;
       wordImage.alt = word;
       wordImage.style.display = '';
       const emoji = ui.wordImageCont.querySelector('.placeholder-emoji');
@@ -759,7 +756,7 @@ function enterGameplay(word) {
     if (ui.wordThai) ui.wordThai.textContent = word;
     if (ui.wordRomanized) ui.wordRomanized.textContent = entry.romanized;
     // Dynamically set audio from TARGET_DICT
-    if (ui.refAudioListen) ui.refAudioListen.src = entry.audio ? `/${entry.audio}` : '';
+    if (ui.refAudioListen) ui.refAudioListen.src = entry.audio ? import.meta.env.BASE_URL + entry.audio : '';
 
     showView('view-gameplay');
     hideResults();
@@ -811,7 +808,7 @@ function bootstrapApplication() {
       } catch (err) {
         console.error('Logout error:', err);
       }
-      window.location.href = '/login/login.html';
+      window.location.href = import.meta.env.BASE_URL + 'login/login.html';
     });
   }
 

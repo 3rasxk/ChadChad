@@ -217,7 +217,7 @@ function setupLogout() {
     } catch (err) {
       console.error('[Admin] Logout error:', err);
     }
-    window.location.href = '/login/login.html';
+    window.location.href = '../login/login.html';
   });
 }
 
