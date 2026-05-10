@@ -71,7 +71,7 @@ const TARGET_DICT = {
   "เปลี่ยนแปลง": {
     id: "plianplaeng", romanized: "Plian-plaeng — Change",
     image: "img/plianplaeng/plianplaeng.jpg", audio: "audio/plianplaeng/plianplaeng.mp3",
-    stars: 0, unlocked: true,
+    stars: 0, unlocked: true, aliases: ["เปี่ยนแปลง", "เปียนแปลง"],
     syllables: [
       { text: "เปลี่ยน", expectedInitials: ["ปล"], expectedVowel: "เอีย", expectedFinal: ["น", "ณ", "ร", "ล"], phoneticGroup: ["เปี่ยน", "เพลี่ยน"] },
       { text: "แปลง", expectedInitials: ["ปล"], expectedVowel: "แอ", expectedFinal: ["ง"], phoneticGroup: ["แปง", "แพลง"] },
@@ -81,7 +81,7 @@ const TARGET_DICT = {
   "เพลิดเพลิน": {
     id: "phloetphloen", romanized: "Phloet-phloen — Enjoy",
     image: "img/phloetphloen/phloetphloen.jpg", audio: "audio/phloetphloen/phloetphloen.mp3",
-    stars: 0, unlocked: true,
+    stars: 0, unlocked: true, aliases: ["เพิดเพิน"],
     syllables: [
       { text: "เพลิด", expectedInitials: ["พล"], expectedVowel: "เอิ", expectedFinal: ["ด", "ต", "ท"], phoneticGroup: ["เพิด", "เปลิด"] },
       { text: "เพลิน", expectedInitials: ["พล"], expectedVowel: "เอิ", expectedFinal: ["น", "ร", "ล"], phoneticGroup: ["เพิน", "เปลิน"] },
@@ -90,7 +90,7 @@ const TARGET_DICT = {
   "ทรัพยากร": {
     id: "sapphayakon", romanized: "Sap-pha-yaa-kon — Resource",
     image: "img/sapphayakon/sapphayakon.jpg", audio: "audio/sapphayakon/sapphayakon.mp3",
-    stars: 0, unlocked: true,
+    stars: 0, unlocked: true, aliases: ["ซับพะยากอน"],
     syllables: [
       { text: "ทรัพ", expectedInitials: ["ซ"], expectedVowel: "อั", expectedFinal: ["บ", "ป", "พ"], phoneticGroup: ["ซับ", "ทับ", "สับ"] },
       { text: "พะ", expectedInitials: ["พ"], expectedVowel: "อะ", expectedFinal: [], phoneticGroup: ["ผะ", "ปะ"] },
@@ -101,7 +101,7 @@ const TARGET_DICT = {
   "ธรรมชาติ": {
     id: "thammachaat", romanized: "Tham-ma-chaat — Nature",
     image: "img/thammachaat/thammachaat.jpg", audio: "audio/thammachaat/thammachaat.mp3",
-    stars: 0, unlocked: true,
+    stars: 0, unlocked: true, aliases: ["ธรรมซาด"],
     syllables: [
       { text: "ธรรม", expectedInitials: ["ท"], expectedVowel: "อำ", expectedFinal: [], phoneticGroup: ["ทำ", "ตำ"] },
       { text: "มะ", expectedInitials: ["ม"], expectedVowel: "อะ", expectedFinal: [], phoneticGroup: ["มา"] },
@@ -111,7 +111,7 @@ const TARGET_DICT = {
   "ซื่อสัตย์": {
     id: "suesat", romanized: "Sue-sat — Honest",
     image: "img/suesat/suesat.jpg", audio: "audio/suesat/suesat.mp3",
-    stars: 0, unlocked: true,
+    stars: 0, unlocked: true, aliases: ["ซื่อสัด"],
     syllables: [
       { text: "ซื่อ", expectedInitials: ["ซ"], expectedVowel: "อือ", expectedFinal: [], phoneticGroup: ["สื่อ", "ชื่อ"] },
       { text: "สัตย์", expectedInitials: ["ส"], expectedVowel: "อั", expectedFinal: ["ด", "ต", "ท"], phoneticGroup: ["สัด", "ซัด"] },
@@ -418,6 +418,13 @@ async function handleRecordingDone() {
     const isTooLong = transcript.length > expectedLength + 10;
 
     console.log(`[ChadChad] 🗣️ Groq transcript: "${transcript}"`);
+
+    // Auto-correct known mispronunciations or Whisper variants
+    const entry = TARGET_DICT[targetWord];
+    if (entry && entry.aliases && entry.aliases.includes(transcript)) {
+      console.log(`[ChadChad] 🔄 Auto-corrected "${transcript}" to "${targetWord}"`);
+      transcript = targetWord;
+    }
 
     // 5. The Rejection Gate
     if (transcript === "" || transcript === "-" || isNoise || isHallucination || isMicTest || isTooLong) {
