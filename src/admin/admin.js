@@ -1,7 +1,7 @@
 import '../style.css';
 import { auth, db } from '../firebase/config.js';
 import { signOut } from 'firebase/auth';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
 
 /* ════════════════════════════════════════════════════════════════
    DOM HELPERS
@@ -100,11 +100,12 @@ async function loadStudents() {
       const starsPerWord = s.stars_per_word || {};
       const wordStarsHTML = WORD_LIST.map(w => {
         const wStars = starsPerWord[w] || 0;
+        const emptyStars = 3 - wStars;
         return `<span class="inline-flex items-center gap-0.5 text-xs px-1.5 py-0.5 rounded ${
           wStars >= 3 ? 'bg-emerald-50 text-emerald-600' :
           wStars >= 1 ? 'bg-amber-50 text-amber-600' :
-          'bg-slate-50 text-slate-300'
-        }">${w} ${'⭐'.repeat(wStars)}</span>`;
+          'bg-slate-50 text-slate-400'
+        }">${w} ${'⭐'.repeat(wStars)}${'<span class="opacity-30 grayscale">⭐</span>'.repeat(emptyStars)}</span>`;
       }).join(' ');
 
       return `
@@ -221,12 +222,48 @@ function setupLogout() {
   });
 }
 
+function setupResetStars() {
+  const btn = $('btn-reset-stars');
+  if (!btn) return;
+
+  btn.addEventListener('click', async (e) => {
+    e.preventDefault();
+    if (!confirm('⚠️ ยืนยันการรีเซ็ตคะแนนดาวของนักเรียน "ทุกคน" หรือไม่?\\nการกระทำนี้ไม่สามารถย้อนกลับได้')) return;
+    
+    try {
+      btn.style.opacity = '0.5';
+      btn.style.pointerEvents = 'none';
+      
+      const snapshot = await getDocs(collection(db, 'students'));
+      const updatePromises = [];
+      snapshot.forEach((docSnap) => {
+        const ref = doc(db, 'students', docSnap.id);
+        updatePromises.push(updateDoc(ref, {
+          stars_per_word: {},
+          total_score: 0
+        }));
+      });
+      
+      await Promise.all(updatePromises);
+      alert('✅ รีเซ็ตคะแนนนักเรียนทุกคนสำเร็จ!');
+      loadStudents(); // Reload the table
+    } catch (err) {
+      console.error('[Admin] Reset stars error:', err);
+      alert('เกิดข้อผิดพลาดในการรีเซ็ตคะแนน');
+    } finally {
+      btn.style.opacity = '1';
+      btn.style.pointerEvents = 'auto';
+    }
+  });
+}
+
 /* ════════════════════════════════════════════════════════════════
    INIT
    ════════════════════════════════════════════════════════════════ */
 
 function init() {
   setupLogout();
+  setupResetStars();
   showView('view-dashboard');
   loadStudents();
 }
